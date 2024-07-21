@@ -47,8 +47,8 @@ public class IdeaController {
         }
         Long userid = (Long) session.getAttribute("userid");
         User user = userService.findUserById(userid);
-        model.addAttribute("user", user);
         model.addAttribute("ideas", ideas);
+        model.addAttribute("user", user);
         return "home.jsp";
     }
     @PostMapping("/ideas/{id}/like")
@@ -59,10 +59,9 @@ public class IdeaController {
         }
         Idea idea = ideaService.findIdeaById(id);
         User user = userService.findUserById(userid);
-
         if (idea.getUsersWhoLiked().contains(user)) {
             idea.getUsersWhoLiked().remove(user);
-            } else {
+        } else {
             idea.getUsersWhoLiked().add(user);
         }
         ideaService.updatedIdea(idea);
@@ -76,13 +75,14 @@ public class IdeaController {
         }
         Idea idea = ideaService.findIdeaById(id);
         User user = userService.findUserById(userid);
-        // if (idea != null && user != null) {
+        if (idea != null && user != null) {
             if (idea.getUsersWhoLiked().contains(user)) {
                 idea.getUsersWhoLiked().remove(user);
                 ideaService.updatedIdea(idea);
             }
-        return "redirect:/ideas" ;
-}
+        }
+        return "redirect:/ideas";
+    }
     @GetMapping("/ideas/new")
     public String NewIdea(@ModelAttribute("idea") Idea idea, HttpSession session) {
         if (session.getAttribute("userid") == null) {
@@ -155,7 +155,7 @@ public class IdeaController {
         }
         idea.setId(id);
         idea.setCreator(exist.getCreator());
-        idea.setUsersWhoLiked(exist.getUsersWhoLiked());
+        idea.setUsersWhoLiked(exist.getUsersWhoLiked()); 
 
         ideaService.updatedIdea(idea);
         return "redirect:/ideas";

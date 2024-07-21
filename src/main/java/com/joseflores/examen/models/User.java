@@ -19,25 +19,35 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "users")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty(message = "El nombre no puede estar vacio. ")
+    @NotEmpty(message = "Name must be present. ")
     private String username;
-    @NotEmpty(message = "El email no puede estar vacio o ser nulo.")
+    @NotEmpty(message = "Email must be present")
+    @Column(unique = true)
+    @Email
     private String email;
-    @NotEmpty(message = "La contraseña no puede estar vacia.")
+    @NotEmpty(message = "Password must be present")
+    @Size(min = 8 , message = "Password must be at least 8 characters long")
     private String password;
     @Transient
+    @NotEmpty(message = "Password confirmation must be present")
     private String passwordConfirmation;
     @Column(updatable = false)
     private Date createdAt;

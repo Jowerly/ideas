@@ -24,6 +24,9 @@
         </div>
         <button type="submit">Guardar cambios</button>
         </form:form>   
+        <form method="post" action="${pageContext.request.contextPath}/ideas/${idea.id}/delete" style="display:inline;">
+            <button type="submit" onclick="return confirm('Are you sure you want to delete this idea?');">Delete Idea</button>
+        </form>
 </div>
 </body>
 </html>

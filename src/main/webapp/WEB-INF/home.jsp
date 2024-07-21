@@ -13,10 +13,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Welcome: ${user.username}</h1>
-    <h2>Ideas</h2>
-    <a href="/ideas?sort=asc">Low likes</a>
-    <a href="/ideas?sort=desc">High likes</a>
+    <h1 class="m-3">Welcome: ${user.username}</h1>
+    <h2 class="m-3">Ideas</h2>
+    <a href="/ideas?sort=asc" class="m-3">Low likes</a>
+    <a href="/ideas?sort=desc" class="m-3">High likes</a>
     <div class="container">
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
@@ -33,28 +33,26 @@
                     <td><c:out value="${fn:length(idea.usersWhoLiked)}"></c:out></td>
                     <td>
                         <c:choose>
-                         <c:when test="${not empty sessionScope.userid and idea.usersWhoLiked.contains(user)}">
-                            <form:form action="${pageContext.request.contextPath}/ideas/${idea.id}/like" method="post" class="d-inline">
-                                <button type="submit" class="btn btn-secondary">Like</button>   
-                            </form:form>
+                         <c:when test="${fn:length(idea.usersWhoLiked) % 2 == 0}">
+                            <form action="${pageContext.request.contextPath}/ideas/${idea.id}/like" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-secondary">Like</button>
+                            </form>
                             </c:when>
                         <c:otherwise>
-                            <form:form action="${pageContext.request.contextPath}/ideas/${idea.id}/unlike" method="post" class="d-inline">
-                                <button type="submit" class="btn btn-secondary">UnLike</button>   
-                            </form:form>                        
+                            <form action="${pageContext.request.contextPath}/ideas/${idea.id}/unlike" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-secondary">Unlike</button>
+                            </form>                   
                         </c:otherwise>
                     </c:choose>
                         <a href="/ideas/${idea.id}">View</a> 
                         <a href="/ideas/${idea.id}/edit">Edit</a>
-                        <form action="/ideas/${idea.id}/delete" method="post" class="d-inline">
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
                     </td>
                 </tr>
                 </c:forEach>
             </tbody>
         </table>
     </div>
-    <button><a href="/ideas/new"></a>Create an idea</button>
+    <a href="${pageContext.request.contextPath}/ideas/new" class="btn btn-primary m-3">Create an idea</a>
+    <a href="/logout" class="btn btn-secondary m-3">logout</a>
 </body>
 </html>

@@ -29,18 +29,20 @@ public class UserController {
     
     @GetMapping("")
     public String loginyRegistro(Model model) {
-        model.addAttribute("newuser", new User());
-        model.addAttribute("loginuser", new User());
+        model.addAttribute("user", new User());
         return "login.jsp";
     }
     @PostMapping("/user/new")
-    public String registro(@Valid @ModelAttribute("newuser") User user, BindingResult result, HttpSession session, Model model){
+    public String registro(@Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session, Model model){
         if (result.hasErrors()) {
-            model.addAttribute("loginuser", new User());
             return "login.jsp";
         }
-        User userEntity = userService.registerUser(user);
-        session.setAttribute("userid", user.getId());
+        if (!user.getPassword().equals(user.getPasswordConfirmation())) {
+            result.rejectValue("passwordConfirmation", "error.user", "Passwords must match");
+                return "login.jsp";
+        }
+        User userEntity  = userService.registerUser(user);
+        session.setAttribute("userid", userEntity.getId());
         return "redirect:/ideas";
     }
     @PostMapping("/user/login")
@@ -49,17 +51,17 @@ public class UserController {
         if (isAuthenticated) {
             User user = userService.findByEmail(email);
             session.setAttribute("userid", user.getId());
-            return "redirect:/home";
+            return "redirect:/ideas";
         } else {
             model.addAttribute("error", "Email o la Contraseña invalidos");
-            model.addAttribute("newuser", new User());
+            model.addAttribute("user", new User());
             return "login.jsp";
         }
     }
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/login";
+        return "redirect:/";
     }
     
 }

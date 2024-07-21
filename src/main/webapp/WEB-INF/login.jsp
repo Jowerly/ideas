@@ -10,18 +10,18 @@
 </head>
 <body>
     <h1>Register</h1>
-    <form:form action="/user/new" modelAttribute="userNew" method="POST">
+    <form:form action="/user/new" modelAttribute="user" method="POST">
     <form:label path="username">Username: </form:label>
     <form:input path="username" type="text"></form:input>
     <form:errors path="username" style="color: red;"></form:errors>
     <br><br>
     <form:label path="email">Email: </form:label>
     <form:input path="email" type="email"></form:input>
-    <form:errors path="email"></form:errors>
+    <form:errors path="email" style="color: red;"></form:errors>
     <br><br>
     <form:label path="password">Pasword: </form:label>
     <form:input path="password" type="password"></form:input>
-    <form:errors path="password"></form:errors>
+    <form:errors path="password" style="color: red;"></form:errors>
     <br><br>
     <form:label path="passwordConfirmation">Password Confirmation: </form:label>
     <form:input path="passwordConfirmation" type="password"></form:input>
@@ -37,7 +37,7 @@
     <br><br>
     <form:label path="password">Password: </form:label>
     <form:input path="password" type="password"></form:input>
-    <form:errors path="password"></form:errors>
+    <form:errors path="password" style="color: red;"></form:errors>
     <br><br>
     <button type="submit">Login</button>
     </form:form>

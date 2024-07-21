@@ -17,7 +17,7 @@
     <br><br>
     <form:label path="content">Descripcion: </form:label>
     <form:input path="content"></form:input>    
-    <form:errors path="content"></form:errors>
+    <form:errors path="content" style="color: red;"></form:errors>
     <br><br>
     <button type="submit">Create</button>
 </form:form>
